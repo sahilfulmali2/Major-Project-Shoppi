@@ -1,29 +1,23 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './index.css';
 
-import Navbar from './components/Navbar.jsx'
-import Homepage from './components/Homepage.jsx'
-import Homepage2 from './components/Homepage2.jsx'
-import Sale from './components/Sale.jsx'
-import Footer from './components/Footer.jsx'
-import ProductDisplay from './components/ProductDisplay.jsx'
+import Navbar from './components/Navbar.jsx';
+import App from './App.jsx';
+import AddProductPage from './admin/Addition.jsx';
 import ProductPage from './components/ProductPage.jsx'
-import AddProductPage from './admin/Addition.jsx'
-
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Navbar></Navbar>
-    <Homepage></Homepage>
-    <Homepage2></Homepage2>
-    <Sale></Sale>
-    <Homepage2></Homepage2>
-    <ProductDisplay></ProductDisplay>
-    <Footer></Footer>
-    <ProductPage></ProductPage>
-
-    <AddProductPage></AddProductPage>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/add" element={<AddProductPage />} />
+        <Route path="/product" element={<ProductPage />} />
+      </Routes>
+    </Router>
   </StrictMode>
-)
+);

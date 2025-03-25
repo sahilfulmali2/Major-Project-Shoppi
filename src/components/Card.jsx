@@ -1,22 +1,19 @@
 import styles from "./Card.module.css";
-import img from "../assets/Login/cloth.webp";
+import { Link } from "react-router-dom";
 
-const Card = () => {
+const Card = ({ product }) => {
   return (
-    <>
-      <div className={styles.Card}>
-        <div className={styles.imgbox}>
-          <img src={img} alt="Product Img" />
-        </div>
-        <a href="">
-        <div>
-          <h4>Product_Name</h4>
-          <h5>Current Bid</h5>
-        </div>
-        </a>
-        
+    <div className={styles.Card}>
+      <div className={styles.imgbox}>
+        <img src={`http://localhost:5000${product.image}`} alt={product.name} />
       </div>
-    </>
+      <Link to="/product">
+        <div>
+          <h4>{product.name}</h4>
+          <h5>₹{product.price}</h5>
+        </div>
+      </Link>
+    </div>
   );
 };
 

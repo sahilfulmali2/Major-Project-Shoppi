@@ -6,7 +6,6 @@ import Footer from './Footer.jsx';
 const ProductPage = () => {
   return (
     <>
-      <Navbar/>
       <div className={styles.Container}>
         <div className={styles.ImgBox}>
           <img src={ProductIamge} alt="" />
