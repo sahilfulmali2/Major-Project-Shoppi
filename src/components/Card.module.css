@@ -1,0 +1,31 @@
+.Card {
+  height: 280px;
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.Card a{
+  text-decoration: none;
+  color: black;
+}
+.Card a:hover{
+  
+  color: orangered;
+}
+.imgbox {
+  width: 90%;
+  height: 70%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); 
+  border-radius: 10px;    
+  overflow: hidden; 
+  
+}
+.imgbox img{
+  border-radius: 5px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
