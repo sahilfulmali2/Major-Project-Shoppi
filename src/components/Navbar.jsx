@@ -1,23 +1,28 @@
-import styles from './Navbar.module.css';
-
+import styles from "./Navbar.module.css";
+import { Link } from "react-router-dom";
 function Navbar() {
   return (
     <nav className={styles.navbarContainer}>
-      
       <div className={styles.logo}>Shoppi</div>
 
-      
       <ul className={styles.navLinks}>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Account</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">Contact Us</a></li>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/register">Account</Link>
+        </li>
+        <li>
+          <Link to="/products">Products</Link>
+        </li>
+        <li>
+          <Link to="/contact">Contact Us</Link>
+        </li>
       </ul>
 
-      
       <div className={styles.icons}>
-        <span>🔔</span> 
-        <span>🛒</span> 
+        <span>🔔</span>
+        <span>🛒</span>
       </div>
     </nav>
   );

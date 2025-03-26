@@ -12,7 +12,7 @@
   
 }
 
-h2 {
+.container h2 {
   text-align: center;
   font-size: 2rem;
   color: #333;
@@ -31,13 +31,13 @@ h2 {
   flex-direction: column;
 }
 
-label {
+.container label {
   font-size: 1rem;
   margin-bottom: 5px;
  
 }
 
-input, textarea {
+.container input, textarea {
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #ccc;
@@ -47,17 +47,17 @@ input, textarea {
   color: black;
 }
 
-input:focus, textarea:focus {
+.container input:focus, textarea:focus {
   border-color: #007bff;
   outline: none;
 }
 
-textarea {
+.container textarea {
   resize: vertical;
   min-height: 100px;
 }
 
-button {
+.container button {
   padding: 12px 20px;
   background-color: #007bff;
   color: white;
@@ -68,11 +68,10 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.container button:hover {
   background-color: #0056b3;
 }
-
-button:active {
+.container button:active {
   background-color: #004085;
 }
 
@@ -83,7 +82,7 @@ button:active {
   margin-top: 20px;
 }
 
-input[type="file"] {
+.container input[type="file"] {
   padding: 5px;
 }
 
