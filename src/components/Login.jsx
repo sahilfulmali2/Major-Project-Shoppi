@@ -1,11 +1,13 @@
 import axios from "axios";
 import styles from "../admin/Addition.module.css";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = new useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,6 +23,7 @@ const Login = () => {
       console.log(response.data);
       setUsername("");
       setPassword("");
+      setTimeout(()=> navigate("/"),2000);
     } catch (error) {
       setMessage("Login Fails");
       console.log(error);

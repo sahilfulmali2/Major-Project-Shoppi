@@ -11,11 +11,12 @@ const Contact = () => {
           <h4>Address:</h4>
           <p>
             <a
-              href="https://www.google.com/maps?q=123+ABC+Street,+XYZ+City,+456789"
+              href="https://maps.app.goo.gl/obTLirTcGyD7Mwmf8"
               target="_blank"
               rel="noopener noreferrer"
             >
-              123, ABC Street, XYZ City, 456789
+              Government College of Engineering,
+              Amravati, Maharashtra, 444604
             </a>
           </p>
         </div>
@@ -23,14 +24,14 @@ const Contact = () => {
         <div className={styles.infoItem}>
           <h4>Mobile Number:</h4>
           <p>
-            <a href="tel:+919876543210">+91 98765 43210</a>
+            <a href="tel:+918669598813">+91 8669598813</a>
           </p>
         </div>
 
         <div className={styles.infoItem}>
           <h4>Email Id:</h4>
           <p>
-            <a href="mailto:contact@example.com">contact@example.com</a>
+            <a href="mailto:sfulmali2907n@gmail.com">sfulmali2907n@gmail.com</a>
           </p>
         </div>
       </div>
