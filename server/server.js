@@ -7,10 +7,11 @@ import cors from "cors";
 import bcrypt from "bcrypt"; // Import bcrypt
 import Register from "./models/register.js";
 import Product from "./models/product.js";
-import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import http from "http";
 import { Server } from "socket.io";
+import { sendEmail } from "./controllers/Sendmail.js";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -84,7 +85,7 @@ app.get("/api/products", async (req, res) => {
 });
 
 // const uplo= multer();
-app.post("/register", upload.none(), async (req, res) => {
+app.post("/register", async (req, res) => {
   try {
     console.log("Received Data:", req.body);
     const { name, username, password } = req.body;
@@ -108,6 +109,19 @@ app.post("/register", upload.none(), async (req, res) => {
     });
 
     await newUser.save();
+
+    // console.log("Email:", process.env.EMAIL);
+    // console.log(
+    //   "Email Pass:",
+    //   process.env.EMAIL_PASS ? "Loaded" : "Not Loaded"
+    // );
+
+    try {
+      await sendEmail(name, username);
+    } catch (err) {
+      console.log("Email sending failed:", err);
+    }
+
     res.status(201).json({ message: "User Registered Sucessfully" });
   } catch (error) {
     res.status(500).json({ message: "User Registered Nahi hua" });
@@ -182,6 +196,20 @@ io.on("connection", (socket) => {
 
       const product = await Product.findById(productId);
       if (!product) return;
+
+      const basePrice = product.price;
+      const highestBid =
+        product.bids.length > 0
+          ? Math.max(...product.bids.map((bid) => bid.amount))
+          : 0;
+
+      if (amount <= basePrice || amount <= highestBid) {
+        console.log("❌ Bid Rejected: Amount too low");
+        socket.emit("bidRejected", {
+          reason: `Your bid must be **greater than** base price (₹${basePrice}) and highest bid (₹${highestBid})`,
+        });
+        return;
+      }
 
       // Create a new bid object using current time from Date.now()
       const newBid = { amount, username, time: Date.now() };
