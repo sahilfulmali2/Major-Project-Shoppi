@@ -35,8 +35,9 @@ const Registration = () => {
       setName("");
       setUsername("");
       setPassword("");
-      setTimeout (()=> navigate("/login"),2000);
+      setTimeout (()=> navigate("/login"),1500);
     } catch (error) {
+      alert("Registration Fails... Try Again")
       setMessage("Registration Fails");
       console.log(error);
     }

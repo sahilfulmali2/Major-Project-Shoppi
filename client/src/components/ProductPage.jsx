@@ -21,12 +21,7 @@ const ProductPage = () => {
     newSocket.on("connect", () => {
       console.log("Socket connected:", newSocket.id);
     });
-  
-    // Optionally, listen to connection errors:
-    newSocket.on("connect_error", (err) => {
-      console.error("Socket connection error:", err);
-    });
-    
+
     setSocket(newSocket);
 
     return () => newSocket.disconnect();
@@ -56,13 +51,20 @@ const ProductPage = () => {
       }
     });
 
-    return () => socket.off("bidUpdated");
+    socket.on("bidRejected", ({ reason }) => {
+      console.log("reject hogya tu")
+      alert(`❌ Bid Rejected: ${reason}`);
+    });
+
+    return () => {
+      socket.off("bidUpdated");
+      socket.off("bidRejected");
+    };
   }, [socket, productId]);
 
   const handlePlaceBid = async () => {
-    console.log("hello from place bid");
     const token = localStorage.getItem("token");
-    console.log("Retrieved token: from front end", token); 
+    console.log("Retrieved token from front end", token); 
 
     if (!token || !socket || !bidAmount) {
       console.error("Token or socket or bidAmount is missing");

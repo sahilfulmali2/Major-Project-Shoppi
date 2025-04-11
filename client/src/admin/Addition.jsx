@@ -43,7 +43,6 @@ const AddProductPage = () => {
       setMessage("Product added successfully ✅");
       console.log(res.data);
 
-      // Clear form fields after submission
       setName("");
       setDescription("");
       setPrice("");
