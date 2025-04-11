@@ -1,0 +1,58 @@
+.Container{
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+}
+
+.ImgBox{
+  width: 50%;
+  padding: 40px;
+ 
+  display: flex;
+  justify-content: center;
+}
+.ImgBox img{
+  width: 450px;
+  height: 450px;
+  overflow: hidden;
+  object-fit: fill;
+  
+  border-radius: 5px;
+}
+
+.Details{
+  width: 50%;
+  padding: 40px;
+  height: 100%;
+  
+}
+.Details p{
+  text-align: justify;
+  font-size: 0.75rem;
+  width: 70%;
+}
+
+.Details h3{
+  margin-top: 50px;
+  font-size: small;
+}
+.button{
+  margin-top: 15px;
+  padding: 8px 14px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.button a{
+  text-decoration: none;
+  color: white;
+}
+
+.button a:hover{
+  color: orangered;
+}

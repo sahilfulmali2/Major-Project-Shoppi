@@ -1,0 +1,16 @@
+.container{
+  height: 80vh;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgb(135, 125, 125);  
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.container h1{
+  text-align: center;
+  
+}
