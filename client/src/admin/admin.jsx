@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 const Admin = () => {
   const [products, setProducts] = useState([]);
   const navigate = new useNavigate;
-  // Fetch products when the component loads
   useEffect(() => {
     fetch("http://localhost:5000/api/products")
       .then((res) => res.json())
@@ -39,14 +38,14 @@ const Admin = () => {
     <>
       <div className={styles.container}>
         <div className={styles.heading}>
-          <h1>Admin Panel</h1>
-          <button className={styles.button} onClick={() => navigate("/add")}>Add Product</button>
+          <h1>Back to Admin Panel</h1>
+          <button className={styles.button} onClick={() => navigate("/admin")}>Back</button>
         </div>
 
         {products.length > 0 ? (
           products.map((product) => (
             <div className={styles.product} key={product._id}>
-              <img src={product.image} alt="product" />
+              <img src={`http://localhost:5000${product.image}`} alt="product" />
               <div className="info">
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>

@@ -28,7 +28,7 @@ const Login = () => {
       console.log(response.data);
       setUsername("");
       setPassword("");
-      setTimeout(()=> navigate("/"),2000);
+      setTimeout(()=> navigate("/"),1500);
     } catch (error) {
       setMessage("Login Fails");
       console.log(error);

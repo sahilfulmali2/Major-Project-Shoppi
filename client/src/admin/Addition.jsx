@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./Addition.module.css";
-
+0;
 const AddProductPage = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState("");
-  const [preview, setPreview] = useState(null); 
+  const [preview, setPreview] = useState(null);
 
   // Handle image selection and preview
   const handleImageChange = (e) => {
@@ -34,11 +34,19 @@ const AddProductPage = () => {
     formData.append("price", price);
     formData.append("image", image);
 
-    
+    const token = localStorage.getItem("token");
+
     try {
-      const res = await axios.post("http://localhost:5000/api/products", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await axios.post(
+        "http://localhost:5000/api/products",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       setMessage("Product added successfully ✅");
       console.log(res.data);
@@ -60,20 +68,36 @@ const AddProductPage = () => {
       <form onSubmit={handleSubmit} className={styles.form}>
         <div>
           <label>Product Name</label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
         </div>
         <div>
           <label>Description</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
         </div>
         <div>
           <label>Price</label>
-          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required />
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            required
+          />
         </div>
         <div>
           <label>Product Image</label>
           <input type="file" onChange={handleImageChange} required />
-          {preview && <img src={preview} alt="Preview" className={styles.preview} />}
+          {preview && (
+            <img src={preview} alt="Preview" className={styles.preview} />
+          )}
         </div>
         <button type="submit">Add Product</button>
       </form>

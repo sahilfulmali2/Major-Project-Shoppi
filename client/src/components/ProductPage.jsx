@@ -32,8 +32,10 @@ const ProductPage = () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/products`);
         const found = res.data.find((prod) => prod._id === productId);
+        
         setProduct(found);
         setBids(found?.bids || []);
+        console.log(product);
       } catch (err) {
         console.error("Error fetching product:", err);
       }
@@ -91,7 +93,7 @@ const ProductPage = () => {
     <>
       <div className={styles.Container}>
         <div className={styles.ImgBox}>
-          <img src={product.image} alt={product.name} />
+          <img src={`http://localhost:5000${product.image}`} alt={product.name} />
         </div>
         <div className={styles.Details}>
           <h2>{product.name}</h2>

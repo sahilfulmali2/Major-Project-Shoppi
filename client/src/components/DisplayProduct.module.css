@@ -1,0 +1,40 @@
+.Home2Container{
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.Container1{
+  width: 25%;
+  padding-top: 20px;
+}
+.Container1 h1{
+  font-size: medium;
+  text-align: center;
+}
+.category{
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.category button{
+  width: 80px;
+  color: black;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  display: inline-block;
+}
+
+.category button:hover {
+  transform: scale(1.5);
+}
+
+
+.productContainer{
+  width: 70%;
+}
