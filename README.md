@@ -1,12 +1,26 @@
-# React + Vite
+# 🛍️ Real-Time Bidding Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack MERN (MongoDB, Express, React, Node.js) application where users 
+can browse products and place **real-time bids**. Admins can upload products 
+with images, and all bids are handled through **Socket.io** for instant 
+updates.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🧾 Product Listings with Images
+- 🔒 User Authentication (JWT-based)
+- ⚡ Real-Time Bidding using Socket.io
+- 📤 Admin Product Upload
+- 📸 Image Uploads Stored in Server Directory
+- 📊 Bid History & Live Updates
+- 🛠️ Fully Responsive UI (React + CSS Modules)
 
-## Expanding the ESLint configuration
+## 📸 Demo
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## 🧑‍💻 Tech Stack
+
+| Frontend | Backend | Real-Time | Database |
+|----------|---------|-----------|----------|
+| React.js | Node.js | Socket.io | MongoDB  |
+| Axios    | Express |           | Mongoose |
