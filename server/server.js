@@ -7,18 +7,25 @@ import cors from "cors";
 import bcrypt from "bcrypt"; // Import bcrypt
 import Register from "./models/register.js";
 import Product from "./models/product.js";
+import Item from "./models/items.js";
 import jwt from "jsonwebtoken";
 import http from "http";
 import { Server } from "socket.io";
 import { sendEmail } from "./controllers/Sendmail.js";
 import dotenv from "dotenv";
+import isAdmin from "./middlewares/isAdmin.js";
 
 dotenv.config();
+const JWT_SECRET= process.env.JWT_SECRET;
 
 const app = express();
 const server = http.createServer(app);
 
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
 
 const io = new Server(server, {
   cors: {
@@ -28,8 +35,6 @@ const io = new Server(server, {
   },
 });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/Shoppi")
@@ -40,7 +45,6 @@ const uploadDir = "uploads";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
-
 app.use("/uploads", express.static(path.join(uploadDir)));
 
 const storage = multer.diskStorage({
@@ -54,22 +58,67 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.post("/api/products", upload.single("image"), async (req, res) => {
+app.post("/api/products",isAdmin, upload.single("image"), async (req, res) => {
   try {
     const { name, description, price } = req.body;
     const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
-
     const product = new Product({
       name,
       description,
       price,
       image: imagePath,
     });
-
+    // console.log(product); 
     await product.save();
-    res.status(201).json({ message: "Product added successfully", product });
+    res.status(200).json({ message: "Product added successfully", product });
   } catch (error) {
     res.status(500).json({ message: "Error adding product", error });
+  }
+});
+
+app.post("/admin/add",isAdmin,upload.single("image"),async(req,res) =>{
+  try {
+    const {name,description,price,category,quantity}= req.body;
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+    console.log(req.body);   
+    const item = new Item ({
+      name,
+      description,
+      price,
+      category,
+      images: imagePath,
+      quantity,
+    })
+    console.log(item);
+    await item.save();
+    res.status(201).json({
+      message: "Category Product Added",
+    })
+
+  } catch (error) {
+    res.status(500).json({ message: "Error adding product", error });
+    console.log(error);
+  }
+});
+
+app.get("/items", async (req, res) => {
+  try {
+    const products = await Item.find();
+    res.status(200).json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ message: "Error fetching products", error });
+  }
+});
+
+app.get("/items/category/:categoryname", async (req, res) => {
+  try {
+    const category = req.params.categoryname;
+    const products = await Item.find({category});
+    res.status(200).json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ message: "Error fetching products", error });
   }
 });
 
@@ -110,12 +159,6 @@ app.post("/register", async (req, res) => {
 
     await newUser.save();
 
-    // console.log("Email:", process.env.EMAIL);
-    // console.log(
-    //   "Email Pass:",
-    //   process.env.EMAIL_PASS ? "Loaded" : "Not Loaded"
-    // );
-
     try {
       await sendEmail(name, username);
     } catch (err) {
@@ -129,17 +172,28 @@ app.post("/register", async (req, res) => {
   }
 });
 
-const JWT_SECRET = "Sahil123";
+
 
 app.post("/login", upload.none(), async (req, res) => {
   try {
     console.log("Received Data:", req.body);
-
+    const JWT_SECRET = process.env.JWT_SECRET;
     const { username, password } = req.body;
 
     if (!username || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
+
+    //if the username is admin or not
+    if(username === process.env.ADMIN_USERNAME || password === process.env.ADMIN_PASS){
+      const token = jwt.sign(
+        { username,role:"admin" },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+      return res.json({token});
+    }
+
     const User = await Register.findOne({ username });
     if (!User) {
       return res.status(600).json({ message: "User Does not exist" });
