@@ -15,8 +15,6 @@ updates.
 - 📊 Bid History & Live Updates
 - 🛠️ Fully Responsive UI (React + CSS Modules)
 
-## 📸 Demo
-
 
 ## 🧑‍💻 Tech Stack
 
@@ -24,3 +22,13 @@ updates.
 |----------|---------|-----------|----------|
 | React.js | Node.js | Socket.io | MongoDB  |
 | Axios    | Express |           | Mongoose |
+
+## 📸 Demo Screenshot
+![Screenshot 1](Screenshots/homepage.png)
+![Screenshot 2](Screenshots/display.png)
+![Screenshot 3](Screenshots/Register.png)
+![Screenshot 4](Screenshots/all.png)
+![Screenshot 5](Screenshots/admin.png)
+
+
+
