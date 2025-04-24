@@ -4,19 +4,25 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import cors from "cors";
-import bcrypt from "bcrypt"; // Import bcrypt
+import bcrypt from "bcrypt";
+
 import Register from "./models/register.js";
 import Product from "./models/product.js";
 import Item from "./models/items.js";
+import Order from "./models/Order.js";
+
 import jwt from "jsonwebtoken";
 import http from "http";
 import { Server } from "socket.io";
 import { sendEmail } from "./controllers/Sendmail.js";
 import dotenv from "dotenv";
+
 import isAdmin from "./middlewares/isAdmin.js";
+import isLoggedin from "./middlewares/isLoggedin.js";
+import { OrderConfirm } from "./controllers/OrderConfirm.js";
 
 dotenv.config();
-const JWT_SECRET= process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const app = express();
 const server = http.createServer(app);
@@ -25,8 +31,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173",
@@ -34,7 +38,6 @@ const io = new Server(server, {
     credentials: true,
   },
 });
-
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/Shoppi")
@@ -58,7 +61,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.post("/api/products",isAdmin, upload.single("image"), async (req, res) => {
+app.post("/api/products", isAdmin, upload.single("image"), async (req, res) => {
   try {
     const { name, description, price } = req.body;
     const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
@@ -68,7 +71,7 @@ app.post("/api/products",isAdmin, upload.single("image"), async (req, res) => {
       price,
       image: imagePath,
     });
-    // console.log(product); 
+    // console.log(product);
     await product.save();
     res.status(200).json({ message: "Product added successfully", product });
   } catch (error) {
@@ -76,25 +79,36 @@ app.post("/api/products",isAdmin, upload.single("image"), async (req, res) => {
   }
 });
 
-app.post("/admin/add",isAdmin,upload.single("image"),async(req,res) =>{
+app.get("/buy/products/:id", async (req, res) => {
   try {
-    const {name,description,price,category,quantity}= req.body;
+    const product = await Item.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ error: "Server Error", details: err.message });
+  }
+});
+
+app.post("/admin/add", isAdmin, upload.single("image"), async (req, res) => {
+  try {
+    const { name, description, price, category, quantity } = req.body;
     const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
-    console.log(req.body);   
-    const item = new Item ({
+    console.log(req.body);
+    const item = new Item({
       name,
       description,
       price,
       category,
       images: imagePath,
       quantity,
-    })
+    });
     console.log(item);
     await item.save();
     res.status(201).json({
       message: "Category Product Added",
-    })
-
+    });
   } catch (error) {
     res.status(500).json({ message: "Error adding product", error });
     console.log(error);
@@ -111,10 +125,31 @@ app.get("/items", async (req, res) => {
   }
 });
 
+app.post("/orders", async (req, res) => {
+  try {
+    const order = new Order(req.body);
+    
+    console.log("Order received:", req.body);
+
+    res.status(201).json({ message: "Order saved successfully" });
+
+    try {
+      console.log("Sending email to:", req.body.email);
+      await OrderConfirm(order.name, req.body.email);
+    } catch (err) {
+      console.log("Email sending failed:", err);
+    }
+    await order.save();
+  } catch (err) {
+    console.error("Order save error:", err);
+    res.status(500).json({ error: "Error saving order" });
+  }
+});
+
 app.get("/items/category/:categoryname", async (req, res) => {
   try {
     const category = req.params.categoryname;
-    const products = await Item.find({category});
+    const products = await Item.find({ category });
     res.status(200).json(products);
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -172,8 +207,6 @@ app.post("/register", async (req, res) => {
   }
 });
 
-
-
 app.post("/login", upload.none(), async (req, res) => {
   try {
     console.log("Received Data:", req.body);
@@ -185,13 +218,14 @@ app.post("/login", upload.none(), async (req, res) => {
     }
 
     //if the username is admin or not
-    if(username === process.env.ADMIN_USERNAME || password === process.env.ADMIN_PASS){
-      const token = jwt.sign(
-        { username,role:"admin" },
-        JWT_SECRET,
-        { expiresIn: "1h" }
-      );
-      return res.json({token});
+    if (
+      username === process.env.ADMIN_USERNAME ||
+      password === process.env.ADMIN_PASS
+    ) {
+      const token = jwt.sign({ username, role: "admin" }, JWT_SECRET, {
+        expiresIn: "1h",
+      });
+      return res.json({ token });
     }
 
     const User = await Register.findOne({ username });

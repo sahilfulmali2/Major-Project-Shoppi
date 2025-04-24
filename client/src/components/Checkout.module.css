@@ -1,0 +1,123 @@
+/* Checkout page container */
+.checkoutContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.productSection {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 30px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.productSection img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.productSection h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.productSection p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.productSection .price {
+  font-size: 1.2rem;
+  color: #e91e63;
+}
+
+.checkoutForm {
+  width: 100%;
+  max-width: 600px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.checkoutForm label {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.checkoutForm input,
+.checkoutForm textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.checkoutForm textarea {
+  min-height: 100px;
+}
+
+.checkoutForm button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.2rem;
+  color: white;
+  background-color: #e91e63;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.checkoutForm button:hover {
+  background-color: #d81b60;
+}
+
+.checkoutForm .formGroup {
+  margin-bottom: 20px;
+}
+
+.checkoutForm .formGroup input,
+.checkoutForm .formGroup textarea {
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.checkoutForm .formGroup label {
+  font-weight: bold;
+}
+
+.checkoutForm .formGroup input,
+.checkoutForm .formGroup textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+.loading {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #999;
+}

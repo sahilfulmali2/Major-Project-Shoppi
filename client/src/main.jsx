@@ -15,7 +15,8 @@ import Admin from "./admin/admin.jsx";
 import AddProduct from './admin/AddProduct.jsx';
 import AddProductPage from "./admin/Addition.jsx";
 import AdminPanel from './admin/AdminPanel.jsx';
-
+import ProductBuy from './components/ProductBuy.jsx';
+import Checkout from './components/Checkout.jsx';
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -26,6 +27,8 @@ createRoot(document.getElementById("root")).render(
         <Route path="/add" element={<AddProductPage />} />
         <Route path="/admin/add" element={<AddProduct />} />
         <Route path="/products/:productId" element={<ProductPage />} />
+        <Route path="/buy/products/:id" element={<ProductBuy/>} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/items" element={<DisplayProduct />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
