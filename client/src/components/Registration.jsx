@@ -7,6 +7,7 @@ const Registration = () => {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [tokenamount, settokenamount] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ const Registration = () => {
           name,
           username,
           password,
+          tokenamount,
         }
       );
 
@@ -35,6 +37,7 @@ const Registration = () => {
       setName("");
       setUsername("");
       setPassword("");
+      settokenamount("");
       setTimeout (()=> navigate("/login"),1500);
     } catch (error) {
       alert("Registration Fails... Try Again")
@@ -71,6 +74,15 @@ const Registration = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Token (in multiple of 1000)</label>
+          <input
+            type="number"
+            value={tokenamount}
+            onChange={(e) => settokenamount(e.target.value)}
             required
           />
         </div>

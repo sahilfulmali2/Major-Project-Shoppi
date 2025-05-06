@@ -39,7 +39,7 @@ const Admin = () => {
       <div className={styles.container}>
         <div className={styles.heading}>
           <h1>Back to Admin Panel</h1>
-          <button className={styles.button} onClick={() => navigate("/admin")}>Back</button>
+          <button className={styles.button} onClick={() => navigate("/adminpanel")}>Back</button>
         </div>
 
         {products.length > 0 ? (

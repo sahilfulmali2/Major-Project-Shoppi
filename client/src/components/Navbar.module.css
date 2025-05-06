@@ -39,3 +39,31 @@
   font-size: 22px;
   cursor: pointer;
 }
+.button {
+  background-color: #939994;
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.button a {
+  color: inherit;
+  text-decoration: none;
+  
+}
+
+.button:hover {
+  background-color: #474747;
+}
+
+.link{
+  text-decoration: none;
+  
+}

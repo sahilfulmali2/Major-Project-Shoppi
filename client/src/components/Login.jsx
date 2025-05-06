@@ -2,33 +2,45 @@ import axios from "axios";
 import styles from "../admin/Addition.module.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/login",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axios.post("http://localhost:5000/login", {
+        username,
+        password,
+      });
 
-      // Save token to localStorage so that it can be retrieved later
       localStorage.setItem("token", response.data.token);
 
-      
+      const decoded = jwtDecode(response.data.token);
+      console.log(decoded);
+      localStorage.setItem("name", decoded.name);
+
       setMessage("Successfull");
       console.log(response.data);
       setUsername("");
       setPassword("");
-      setTimeout(()=> navigate("/"),1500);
+
+      if (response.data.role === "admin") {
+        setTimeout(() => {
+          navigate("/adminpanel");
+          window.location.reload();
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          navigate("/");
+          window.location.reload();
+        }, 1500);
+      }
     } catch (error) {
       setMessage("Login Fails");
       console.log(error);
